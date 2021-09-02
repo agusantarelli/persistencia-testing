@@ -1,5 +1,7 @@
 package persistence.dto;
 
+import persistence.dao.CustomerDAO;
+
 public class CustomerDTO {
 
     private final String id;
@@ -101,4 +103,6 @@ public class CustomerDTO {
                 '}';
     }
 
+    public void persist(CustomerDAO dao) {
+    }
 }

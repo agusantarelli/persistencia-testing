@@ -115,11 +115,55 @@ public class CustomerDAOTestMock {
         Assertions.assertEquals("java.sql.SQLException: Some error", actual.getMessage());
     }
 
-    @Disabled("Implement it yourself!")
     @Test
     @DisplayName("When create is called it should insert the record and return the customer")
+    void testSuccessfullyCreateCustomer() throws SQLException {
+
+        //Given
+        final var expected = CustomerMockFactory.customerDTO(CUSTOMER_ID);
+
+        final var stmt = Mockito.mock(PreparedStatement.class);
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(1), Mockito.eq(expected.getId()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(2), Mockito.eq(expected.getCompanyName()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(3), Mockito.eq(expected.getContactName()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(4), Mockito.eq(expected.getContactTitle()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(5), Mockito.eq(expected.getAddress()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(6), Mockito.eq(expected.getCity()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(7), Mockito.eq(expected.getRegion()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(8), Mockito.eq(expected.getPostalCode()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(9), Mockito.eq(expected.getCountry()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(10), Mockito.eq(expected.getPhone()));
+        Mockito.doNothing().when(stmt).setString(Mockito.eq(11), Mockito.eq(expected.getFax()));
+        Mockito.when(stmt.executeUpdate()).thenReturn(1);
+
+        final var conn = Mockito.mock(Connection.class);
+        Mockito.when(conn.prepareStatement(Mockito.any(String.class))).thenReturn(stmt);
+
+        final var ds = Mockito.mock(DataSource.class);
+        Mockito.when(ds.getConnection()).thenReturn(conn);
+
+        final var dao = new CustomerDAO(ds);
+
+        // When
+        final var actual = dao.create(expected);
+
+        //Then
+        Assertions.assertEquals(expected, actual);
+
+    }
+    /*
     void testSuccessfullyCreateCustomer() {
-        // TODO: Implement it!
+        // Given
+        final var dao = new CustomerDAO(DS);
+        final var expected = CustomerMockFactory.customerDTO(CUSTOMER_ID);
+
+        // When
+        final var actual = dao.create(expected);
+
+
+        // Then
+        Assertions.assertEquals(expected, actual);
     }
 
+     */
 }
