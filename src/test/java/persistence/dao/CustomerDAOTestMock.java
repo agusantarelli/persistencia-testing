@@ -151,19 +151,5 @@ public class CustomerDAOTestMock {
         Assertions.assertEquals(expected, actual);
 
     }
-    /*
-    void testSuccessfullyCreateCustomer() {
-        // Given
-        final var dao = new CustomerDAO(DS);
-        final var expected = CustomerMockFactory.customerDTO(CUSTOMER_ID);
 
-        // When
-        final var actual = dao.create(expected);
-
-
-        // Then
-        Assertions.assertEquals(expected, actual);
-    }
-
-     */
 }
